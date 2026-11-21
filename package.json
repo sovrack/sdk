@@ -1,0 +1,22 @@
+{
+  "name": "@sovrack/sdk",
+  "version": "3.1.0",
+  "description": "Official TypeScript & JavaScript SDK for the Sovrack Deployment Platform",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["sovrack", "sdk", "api", "deployment", "paas", "cloud"],
+  "author": "Sovrack Team <contact@sovrack.com>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sovrack/sdk.git"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.4.5"
+  }
+}
