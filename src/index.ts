@@ -57,6 +57,42 @@ export class SovrackClient {
     },
   };
 
+  public readonly previews = {
+    list: async (projectId: string): Promise<Array<{ id: string; prNumber: string; branch: string; url: string }>> => {
+      return this.request(`/api/v1/projects/${projectId}/previews`);
+    },
+    teardown: async (projectId: string, prNumber: number): Promise<{ success: boolean }> => {
+      return this.request(`/api/v1/projects/${projectId}/previews/${prNumber}`, {
+        method: "DELETE",
+      });
+    },
+  };
+
+  public readonly telemetry = {
+    getServerMetrics: async (serverId: string): Promise<{
+      connected: boolean;
+      metrics?: {
+        cpuPercent: number;
+        memoryUsedMb: number;
+        memoryTotalMb: number;
+        diskUsedGb: number;
+        diskTotalGb: number;
+        containers: Array<{ id: string; name: string; state: string; cpuPercent: number }>;
+      };
+    }> => {
+      return this.request(`/servers/${serverId}/telemetry`);
+    },
+  };
+
+  public readonly pitr = {
+    restore: async (serviceId: string, targetTimestamp: string): Promise<{ success: boolean; message: string }> => {
+      return this.request(`/services/${serviceId}/pitr-restore`, {
+        method: "POST",
+        body: JSON.stringify({ targetTimestamp }),
+      });
+    },
+  };
+
   private async request<T>(path: string, init?: RequestInit): Promise<T> {
     const res = await fetch(`${this.baseUrl}${path}`, {
       ...init,
